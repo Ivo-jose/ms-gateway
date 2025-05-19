@@ -11,6 +11,8 @@ public class GatewayRoutesConfig {
 	@Bean
 	RouteLocator routes(RouteLocatorBuilder builder) {
 		return builder.routes()
+			.route(p -> p.path("/get").filters(f -> f.addRequestHeader("Hello", "World").addRequestParameter("Hello", "World"))
+																										.uri("http://httpbin.org:80"))
 			.route("ms-book", r -> r.path("/api/book-service/**").uri("lb://ms-book"))
 			.route("ms-currency-exchange", r -> r.path("/api/currency-exchange/**").uri("lb://ms-currency-exchange"))
 			.build();
